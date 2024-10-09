@@ -3,7 +3,8 @@
 </button>
 
 @for (player of game.players; track $index) {
-  <app-player class="player-position" [ngStyle]="{'top.px': 120 * $index + 130}" [name]="player"></app-player>
+  <app-player class="player-position" [ngStyle]="{'top.px': 85 * $index + 130}" [name]="player"
+    [playerActive]="game.currentPlayer === $index"></app-player>
 }
 
 <div class="field">

@@ -51,6 +51,7 @@ turnCard() {
     setTimeout (() => {
       this.turnCardAnimation = false;
       this.game.discard.push(this.currentCard ?? { name: 'test', src: 'test' });
+      this.game.currentPlayer = (this.game.currentPlayer + 1) % this.game.players.length;
   }, 1450)
 };
 }
