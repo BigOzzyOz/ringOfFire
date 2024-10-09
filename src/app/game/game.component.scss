@@ -37,28 +37,36 @@
         transform: scale(1.1) translate(-50%, -10px);
       }
     }
+  }
 
-    &.turnCard{
-      animation: turnCardAnimation 2s ease-in-out;
+  .turnCard{
+    animation: turnCardAnimation 1.5s ease-in-out;
+    transform: scale(1) translate(280px, -220px) rotate(20deg);
+
+    &:hover{
+      cursor: pointer;
       transform: scale(1) translate(280px, -220px) rotate(20deg);
-
-      &:hover{
-        cursor: pointer;
-        transform: scale(1) translate(280px, -220px) rotate(20deg);
-      }
     }
+  }
+
+  .playedCard{
+    transform: scale(1) translate(280px, -220px) rotate(20deg);
   }
 }
 
+
   @keyframes turnCardAnimation {
     0% {
-      transform: scale(1.25) translate(-50%, 0);
+      transform: scale(1.25) translate(-50%, -10px);
     } 
-    40% {
+    30% {
       transform: scale(1.5) translate(-50%, 0);
     }
-    60% {
+    50% {
       transform: scale(1.5) translate(-50%, 0);
+    }
+    80% {
+      transform: scale(1.5) translate(280px, -220px) rotate(20deg);
     }
     100% {
       transform: scale(1) translate(280px, -220px) rotate(20deg);

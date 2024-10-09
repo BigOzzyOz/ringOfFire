@@ -30,10 +30,15 @@ newGame() {
 
 
 turnCard() {
-this.turnCardAnimation = true;
-this.currentCard = this.game.stack.pop();
- 
-this.imageSrc = this.currentCard?.src;
-this.game.discard.push(this.currentCard ?? { name: 'test', src: 'test' });
+  if (!this.turnCardAnimation) {
+    this.currentCard = this.game.stack.pop();
+    this.turnCardAnimation = true;
+    this.imageSrc = this.currentCard?.src;
+    setTimeout (() => {
+      this.turnCardAnimation = false;
+      this.game.discard.push(this.currentCard ?? { name: 'test', src: 'test' });
+  }, 1450)
+};
 }
+ 
 }

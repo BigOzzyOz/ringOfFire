@@ -1,12 +1,13 @@
 <div class="field">
   <div class="card-stack">
-    @for (card of [0, 1, 2, 3, 4]; track card; let i = $index) {
-      @if (card === 4) {
-        <img (click)="turnCard()" [class.turnCard]="turnCardAnimation" [ngStyle]="{'left.px': i * 3}" [src]="imageSrc">
-      } @else {
-        <img [ngStyle]="{'left.px': i * 3}" src="assets/img/cards/gray_back.png" alt="">
-      }
+    @for (card of game.discard; track $index) {
+      <img ngClass="playedCard" src="{{card.src}}" alt="" [ngStyle]="{'left.px': game.stack.length + $index }">
     }
-
+    @for (card of game.stack; track card; let i = $index) {
+      <img [ngStyle]="{'left.px': i}" src="assets/img/cards/gray_back.png" alt="">
+    }
+    <img (click)="turnCard()" [ngStyle]="{'left.px': game.stack.length }" src="assets/img/cards/gray_back.png">
+    <img (click)="turnCard()" ngClass="turnCard" *ngIf="turnCardAnimation" [src]="imageSrc" class="turnCard"
+      [ngStyle]="{'left.px': game.stack.length}">
   </div>
 </div>
