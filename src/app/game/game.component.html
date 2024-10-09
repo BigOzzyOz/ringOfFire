@@ -1,12 +1,20 @@
+<button mat-mini-fab color="primary" class="button-add" (click)="openDialog()">
+  <mat-icon>add</mat-icon>
+</button>
+
+@for (player of game.players; track $index) {
+  <app-player class="player-position" [ngStyle]="{'top.px': 120 * $index + 130}" [name]="player"></app-player>
+}
+
 <div class="field">
   <div class="card-stack">
     @for (card of game.discard; track $index) {
       <img ngClass="playedCard" src="{{card.src}}" alt="" [ngStyle]="{'left.px': game.stack.length + $index }">
     }
     @for (card of game.stack; track card; let i = $index) {
-      <img [ngStyle]="{'left.px': i}" src="assets/img/cards/gray_back.png" alt="">
+      <img [ngStyle]="{'left.px': i}" src="assets/img/cards/purple_back.png" alt="">
     }
-    <img (click)="turnCard()" [ngStyle]="{'left.px': game.stack.length }" src="assets/img/cards/gray_back.png">
+    <img (click)="turnCard()" [ngStyle]="{'left.px': game.stack.length }" src="assets/img/cards/purple_back.png">
     <img (click)="turnCard()" ngClass="turnCard" *ngIf="turnCardAnimation" [src]="imageSrc" class="turnCard"
       [ngStyle]="{'left.px': game.stack.length}">
   </div>
