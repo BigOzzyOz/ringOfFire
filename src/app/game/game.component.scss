@@ -68,6 +68,18 @@
   left: 32px;
 }
 
+.mission{
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: 15vw;
+  width: 80vw;
+  transform: translate(0, 0);
+  transition: all 125ms ease-in-out;
+}
+
   @keyframes turnCardAnimation {
     0% {
       transform: scale(1.25) translate(-50%, -10px);

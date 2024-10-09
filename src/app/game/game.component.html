@@ -7,6 +7,8 @@
     [playerActive]="game.currentPlayer === $index"></app-player>
 }
 
+<app-card class="mission" *ngIf="game.discard.length > 0"></app-card>
+
 <div class="field">
   <div class="card-stack">
     @for (card of game.discard; track $index) {

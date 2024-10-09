@@ -10,6 +10,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { DialogOverviewExampleDialog } from './dialog/dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { CardComponent } from "./card/card.component";
 
 export interface DialogData {
   name: string;
@@ -19,7 +20,7 @@ export interface DialogData {
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [CommonModule, PlayerComponent, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, DialogOverviewExampleDialog, MatDialogModule],
+  imports: [CommonModule, PlayerComponent, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, DialogOverviewExampleDialog, MatDialogModule, CardComponent],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
 })
