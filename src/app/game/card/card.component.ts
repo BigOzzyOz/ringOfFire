@@ -51,7 +51,7 @@ ngOnChanges(): void {
 
 
 updateCard() {
-  const cardNumber = +this.card.name.split('_')[1];
+  const cardNumber = +this.card.name.split('_')[1] - 1;
   this.title = this.cardAction[cardNumber].title;
   this.description = this.cardAction[cardNumber].description;
 }

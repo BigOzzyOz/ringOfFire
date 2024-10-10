@@ -51,7 +51,8 @@ turnCard() {
     setTimeout (() => {
       this.turnCardAnimation = false;
       this.game.discard.push(this.currentCard ?? { name: 'test', src: 'test' });
-      this.game.currentPlayer = (this.game.currentPlayer + 1) % this.game.players.length;
+      this.game.currentPlayer++
+      this.game.currentPlayer = this.game.currentPlayer  % this.game.players.length;
   }, 1450)
 };
 }
@@ -62,8 +63,9 @@ openDialog(): void {
   });
 
   dialogRef.afterClosed().subscribe((name: string) => {
-    if (name) {
-      this.game.players.push(name);  
+    if (name && name.length > 0) {
+      this.game.players.push(name);
+      this.game.currentPlayer = this.game.players.indexOf(name);  
     }
   });
  
