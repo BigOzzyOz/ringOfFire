@@ -6,8 +6,10 @@
   <app-player class="player-position" [ngStyle]="{'top.px': 85 * $index + 130}" [name]="player"
     [playerActive]="game.currentPlayer === $index"></app-player>
 }
+@if (game.discard.length > 0) {
+  <app-card [card]="game.discard[game.discard.length - 1]" class="mission"></app-card>
+}
 
-<app-card class="mission" *ngIf="game.discard.length > 0"></app-card>
 
 <div class="field">
   <div class="card-stack">

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { Game } from '../../models/game';
 import { PlayerComponent } from "../player/player.component";
 import { MatButtonModule } from '@angular/material/button';
@@ -30,12 +30,11 @@ name: string = '';
 turnCardAnimation: boolean = false;
 game: Game;
 imageSrc: string | undefined = "assets/img/cards/purple_back.png";
-currentCard?:{name: string, src: string } = { name: 'test', src: 'test' };
+currentCard:{name: string, src: string } | undefined = { name: 'test', src: 'test' };
 
 
 constructor(public dialog: MatDialog) {
   this.game = new Game();
-  console.log(this.game);
 }
 
 
@@ -46,7 +45,7 @@ newGame() {
 
 turnCard() {
   if (!this.turnCardAnimation) {
-    this.currentCard = this.game.stack.pop();
+    this.currentCard = this.game.stack.length === 0 ? { name: 'test', src: 'test' } : this.game.stack.pop();
     this.turnCardAnimation = true;
     this.imageSrc = this.currentCard?.src;
     setTimeout (() => {
