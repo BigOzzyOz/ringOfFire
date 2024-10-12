@@ -35,7 +35,7 @@ export const appConfig: ApplicationConfig = {
       "projectId": "ring-of-fire-66f7b",
       "appId": "1:93805992206:web:90278457fa84c61ba15f5f",
       "storageBucket": "ring-of-fire-66f7b.appspot.com",
-      "apiKey": "AIzaSyDPD4WJU891fQJv7z_G3wXqk5GrC4LdfRk",
+      "apiKey": "AIzaSyA0myxIEUDnAaaj7J2-uPm34NXlSU2wVyg",
       "authDomain": "ring-of-fire-66f7b.firebaseapp.com",
       "messagingSenderId": "93805992206"
     }))), importProvidersFrom(provideAuth(() => getAuth())),
