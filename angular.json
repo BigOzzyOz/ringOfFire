@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ring-of-fire": {
+    "ringoffire": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -105,12 +105,12 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "ring-of-fire:build:production",
-              "serveTarget": "ring-of-fire:serve:production"
+              "buildTarget": "ringoffire:build:production",
+              "serveTarget": "ringoffire:serve:production"
             },
             "development": {
-              "buildTarget": "ring-of-fire:build:development",
-              "serveTarget": "ring-of-fire:serve:development"
+              "buildTarget": "ringoffire:build:development",
+              "serveTarget": "ringoffire:serve:development"
             }
           },
           "defaultConfiguration": "production"
