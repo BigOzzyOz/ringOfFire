@@ -1,6 +1,7 @@
 import {
   ApplicationConfig,
-  importProvidersFrom
+  importProvidersFrom,
+  provideZoneChangeDetection
 } from '@angular/core';
 import {
   provideRouter
@@ -28,17 +29,16 @@ import {
   getDatabase,
   provideDatabase
 } from '@angular/fire/database';
+import {
+  environment
+} from '../environments/environment.development';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideAnimationsAsync(),
-    importProvidersFrom(provideFirebaseApp(() => initializeApp({
-      "projectId": "ring-of-fire-66f7b",
-      "appId": "1:93805992206:web:90278457fa84c61ba15f5f",
-      "storageBucket": "ring-of-fire-66f7b.appspot.com",
-      "apiKey": "AIzaSyA0myxIEUDnAaaj7J2-uPm34NXlSU2wVyg",
-      "authDomain": "ring-of-fire-66f7b.firebaseapp.com",
-      "messagingSenderId": "93805992206"
-    }))), importProvidersFrom(provideAuth(() => getAuth())),
+  providers: [
+    provideRouter(routes),
+    provideAnimationsAsync(),
+    importProvidersFrom(provideFirebaseApp(() => initializeApp(environment.firebase))),
+    importProvidersFrom(provideAuth(() => getAuth())),
     importProvidersFrom(provideFirestore(() => getFirestore())),
     importProvidersFrom(provideDatabase(() => getDatabase()))
   ]
