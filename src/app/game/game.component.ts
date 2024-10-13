@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { Game } from '../../models/game';
 import { PlayerComponent } from '../player/player.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,9 +14,11 @@ import { CardComponent } from './card/card.component';
 import { GameService } from '../firebase-service/game.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
+
 export interface DialogData {
   name: string;
 }
+
 
 @Component({
   selector: 'app-game',
@@ -25,6 +27,7 @@ export interface DialogData {
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
 })
+
 
 export class GameComponent {
   gameId: string = '';
@@ -37,11 +40,10 @@ export class GameComponent {
 
   constructor(public dialog: MatDialog, private gameService: GameService, private route: ActivatedRoute, private router: Router) {
     this.game = new Game();
-    this.route.params.subscribe((params) => {
-      this.gameId = params?.['gameId'] ?? ':gameId';
-    });
+    this.route.params.subscribe((params) => this.gameId = params?.['gameId'] ?? ':gameId');
     this.initGame();
   }
+
 
   async ngDoCheck(): Promise<void> {
     if (this.gameService.dataUpdate) {
@@ -51,59 +53,63 @@ export class GameComponent {
   }
 
   async initGame() {
-    if (this.gameId != ':gameId') {
-      await this.getGame();
-    } else {
+    if (this.gameId != ':gameId') await this.getGame();
+    else {
       const docRef = await this.gameService.addGame(this.createGame(this.game));
       if (docRef) this.gameId = docRef.id;
-      console.log(this.gameId);
       this.router.navigate(['/game', this.gameId]);
-    }
+    };
     this.gameService.gameId = this.gameId;
   }
+
+  turnAndNextPlayer() {
+    this.changePlayer();
+    this.turnCard();
+  }
+
 
   async turnCard() {
     if (!this.turnCardAnimation) {
       this.currentCard = this.game.stack.length === 0 ? { name: '', src: '', } : this.game.stack.pop();
       this.turnCardAnimation = true;
       this.imageSrc = this.currentCard?.src;
+      await this.gameService.updateGame(this.gameId, this.createGame(this.game));
       setTimeout(async () => {
-        this.turnCardAnimation = false;
         this.game.discard.push(this.currentCard ?? { name: '', src: '', });
-        this.game.currentPlayer++;
-        this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+        this.turnCardAnimation = false;
         await this.gameService.updateGame(this.gameId, this.createGame(this.game));
       }, 1450);
     }
   }
 
+
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      data: {
-        name: this.name,
-      },
+      data: { name: this.name, },
     });
-
     dialogRef.afterClosed().subscribe(async (name: string) => {
       if (name && name.length > 0) {
         this.game.players.push(name);
         this.game.currentPlayer = this.game.players.indexOf(name);
         await this.gameService.updateGame(this.gameId, this.createGame(this.game));
-      }
+      };
     });
   }
 
+
   async getGame() {
     let oldGame: any = await this.gameService.getGame(this.gameId);
-    if (oldGame.stack.length === this.game.stack.length - 1) {
+    if (this.isNextTurn(oldGame)) {
+      this.changePlayer();
       this.turnCard();
-    } else if (oldGame.stack.length === this.game.stack.length || oldGame.stack.length < this.game.stack.length - 1) {
-    this.game.players = oldGame.players;
-    this.game.currentPlayer = oldGame.currentPlayer;
-    this.game.discard = oldGame.discard;
-    this.game.stack = oldGame.stack;
+    } else if (this.isOldGame(oldGame)) {
+      this.game.players = oldGame.players;
+      this.game.currentPlayer = oldGame.currentPlayer;
+      this.game.discard = oldGame.discard;
+      this.game.stack = oldGame.stack;
     }
   }
+
 
   createGame(game: Game) {
     return {
@@ -112,5 +118,23 @@ export class GameComponent {
       discard: this.game.discard,
       stack: this.game.stack,
     };
+  }
+
+
+  changePlayer() {
+    if (!this.turnCardAnimation) {
+      this.game.currentPlayer++
+      this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+    }
+  }
+
+
+  isOldGame(oldGame: Game) {
+    return oldGame.stack.length === this.game.stack.length || oldGame.stack.length < this.game.stack.length - 1;
+  }
+
+
+  isNextTurn(oldGame: Game) {
+    return oldGame.stack.length === this.game.stack.length - 1;
   }
 }
