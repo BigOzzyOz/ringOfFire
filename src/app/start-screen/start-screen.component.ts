@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+  Component
+} from '@angular/core';
+import {
+  Router
+} from '@angular/router';
 
 @Component({
   selector: 'app-start-screen',
@@ -13,10 +17,10 @@ export class StartScreenComponent {
   constructor(private router: Router) {
 
   }
-  
+
 
   startGame() {
-    this.router.navigateByUrl('/game');
+    this.router.navigateByUrl('/game/:gameId');
   }
 
 }

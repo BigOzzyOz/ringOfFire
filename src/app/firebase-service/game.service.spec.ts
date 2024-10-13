@@ -1,12 +1,11 @@
 import {
   TestBed
 } from '@angular/core/testing';
-
 import {
   GameService
 } from './game.service';
 
-describe('GameServiceService', () => {
+describe('GameService', () => {
   let service: GameService;
 
   beforeEach(() => {
