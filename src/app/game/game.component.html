@@ -2,10 +2,24 @@
   <mat-icon>add</mat-icon>
 </button>
 
-@for (player of game.players; track $index) {
-  <app-player class="player-position" [ngStyle]="{'top.px': 85 * $index + 130}" [name]="player"
-    [playerActive]="game.currentPlayer === $index"></app-player>
-}
+<div class="players">
+  @if (game.players.length <= 4) {
+    @for (player of game.players; track $index) {
+      <app-player class="player-position" [name]="player" [playerActive]="game.currentPlayer === $index"></app-player>
+    }
+  }
+
+  @if (game.players.length > 4) {
+    @for (player of players; track $index) {
+      <app-player class="player-position" [name]="player"
+        [playerActive]="player === game.players[game.currentPlayer]"></app-player>
+    }
+    @if (game.players.length - 4 > 0) {
+      <app-player class="player-position" [name]="'+' + (game.players.length - 4)"></app-player>
+    }
+  }
+</div>
+
 @if (game.discard.length > 0) {
   <app-card [card]="game.discard[game.discard.length - 1]" class="mission"></app-card>
 }
@@ -13,16 +27,16 @@
 <div class="field">
   <div class="card-stack">
     @for (card of game.discard; track $index) {
-      <img ngClass="playedCard" src="{{card.src}}" alt="" [ngStyle]="{'left.px': game.stack.length + $index }">
+      <img ngClass="playedCard" src="{{card.src}}" alt="" [ngStyle]="{'left.px': (game.stack.length + $index) / 8 }">
     }
     @for (card of game.stack; track card; let i = $index) {
-      <img [ngStyle]="{'left.px': i}" src="assets/img/cards/purple_back.png" alt="">
+      <img [ngStyle]="{'left.px': i / 8}" src="assets/img/cards/purple_back.png" alt="">
     }
     @if (game.stack.length > 0) {
-      <img (click)="turnAndNextPlayer()" [ngStyle]="{'left.px': game.stack.length }"
+      <img (click)="turnAndNextPlayer()" [ngStyle]="{'left.px': game.stack.length / 8 }"
         src="assets/img/cards/purple_back.png">
     }
     <img ngClass="turnCard" *ngIf="turnCardAnimation" [src]="imageSrc" class="turnCard"
-      [ngStyle]="{'left.px': game.stack.length}">
+      [ngStyle]="{'left.px': game.stack.length / 8}">
   </div>
 </div>

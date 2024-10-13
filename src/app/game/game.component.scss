@@ -1,4 +1,4 @@
-.field{
+.field {
   width: 100dvw;
   height: 100dvh;
   max-width: 100%;
@@ -12,18 +12,20 @@
   align-items: center;
 }
 
-.card-stack{
+.card-stack {
   position: relative;
-  left: -20vw;
-  height: 30vw;
+  left: -30vw;
+  top: 10vh;
+  height: 40vw;
   width: auto;
   max-height: 500px;
+  min-height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
 
 
-  img{
+  img {
     position: absolute;
     top: 0;
     left: 0;
@@ -32,44 +34,52 @@
     transform: translate(-50%, 0);
     transition: all 125ms ease-in-out;
 
-    &:last-child{
-      &:hover{
+    &:last-child {
+      &:hover {
         cursor: pointer;
         transform: scale(1.1) translate(-50%, -10px);
       }
     }
   }
 
-  .turnCard{
+  .turnCard {
     animation: turnCardAnimation 1.5s ease-in-out;
-    transform: scale(1) translate(280px, -220px) rotate(20deg);
+    transform: scale(1) translate(75%, -30%) rotate(-20deg);
+    z-index: 1;
 
-    &:hover{
+    &:hover {
       cursor: pointer;
-      transform: scale(1) translate(280px, -220px) rotate(20deg);
+      transform: scale(1) translate(75%, -30%) rotate(-20deg);
     }
   }
 
-  .playedCard{
-    transform: scale(1) translate(280px, -220px) rotate(20deg);
+  .playedCard {
+    transform: scale(1) translate(75%, -30%) rotate(-20deg);
   }
 }
 
 
-.player-position{
+.players {
   position: absolute;
-  top: 0;
+  top: 32px;
   left: 0;
-  
+  right: 0;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
+
 .button-add {
+  z-index: 3;
   position: absolute;
   bottom: 32px;
   left: 32px;
 }
 
-.mission{
+.mission {
+  z-index: 2;
   position: absolute;
   bottom: 32px;
   left: 0;
@@ -81,20 +91,115 @@
   transition: all 125ms ease-in-out;
 }
 
-  @keyframes turnCardAnimation {
-    0% {
-      transform: scale(1.25) translate(-50%, -10px);
-    } 
-    30% {
-      transform: scale(1.5) translate(-50%, 0);
+@keyframes turnCardAnimation {
+  0% {
+    transform: scale(1.25) translate(-50%, -10px);
+  }
+
+  30% {
+    transform: scale(1.5) translate(-50%, 0);
+  }
+
+  50% {
+    transform: scale(1.5) translate(-50%, 0);
+  }
+
+  80% {
+    transform: scale(1.5) translate(75%, -30%) rotate(-20deg);
+  }
+
+  100% {
+    transform: scale(1) translate(75%, -30%) rotate(-20deg);
+  }
+}
+
+@keyframes turnCardAnimationMobile {
+  0% {
+    transform: scale(1.25) translate(-40%, -10px);
+  }
+
+  30% {
+    transform: scale(1.5) translate(-40%, 0);
+  }
+
+  50% {
+    transform: scale(1.5) translate(-40%, 0);
+  }
+
+  80% {
+    transform: scale(1.5) translate(-30%, -90%) rotate(-90deg);
+  }
+
+  100% {
+    transform: scale(1) translate(-30%, -90%) rotate(-90deg);
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  .card-stack {
+    position: relative;
+    left: -20vw;
+    height: 30vw;
+    width: auto;
+    max-height: 500px;
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: auto;
+      transform: translate(-40%, 0);
+      transition: all 125ms ease-in-out;
+
+      &:last-child {
+        &:hover {
+          cursor: pointer;
+          transform: scale(1.1) translate(-40%, -10px);
+        }
+      }
     }
-    50% {
-      transform: scale(1.5) translate(-50%, 0);
+
+    .turnCard {
+      animation: turnCardAnimationMobile 1.5s ease-in-out;
+      transform: scale(1) translate(-30%, -90%) rotate(-90deg);
+
+      &:hover {
+        cursor: pointer;
+      }
     }
-    80% {
-      transform: scale(1.5) translate(280px, -220px) rotate(20deg);
-    }
-    100% {
-      transform: scale(1) translate(280px, -220px) rotate(20deg);
+
+    .playedCard {
+      transform: scale(1) translate(-30%, -90%) rotate(-90deg);
     }
   }
+
+  .players {
+    top: 0;
+    flex-direction: row;
+    gap: 8px;
+    margin: auto;
+  }
+
+  .button-add {
+    bottom: 20vh;
+    right: 16px;
+    left: unset;
+  }
+
+  .mission {
+    bottom: 0;
+    display: flex;
+    align-items: end;
+    height: 150px;
+    width: 100vw;
+  }
+
+
+}

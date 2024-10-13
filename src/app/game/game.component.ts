@@ -36,6 +36,7 @@ export class GameComponent {
   game: Game;
   imageSrc: string | undefined = 'assets/img/cards/purple_back.png';
   currentCard: { name: string; src: string; } | undefined = { name: '', src: '', };
+  players: string[] = [];
 
 
   constructor(public dialog: MatDialog, private gameService: GameService, private route: ActivatedRoute, private router: Router) {
@@ -60,6 +61,7 @@ export class GameComponent {
       this.router.navigate(['/game', this.gameId]);
     };
     this.gameService.gameId = this.gameId;
+    this.getPlayers();
   }
 
   turnAndNextPlayer() {
@@ -78,7 +80,7 @@ export class GameComponent {
         this.game.discard.push(this.currentCard ?? { name: '', src: '', });
         this.turnCardAnimation = false;
         await this.gameService.updateGame(this.gameId, this.createGame(this.game));
-      }, 1450);
+      }, 1300);
     }
   }
 
@@ -125,6 +127,7 @@ export class GameComponent {
     if (!this.turnCardAnimation) {
       this.game.currentPlayer++
       this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+      this.getPlayers();
     }
   }
 
@@ -136,5 +139,19 @@ export class GameComponent {
 
   isNextTurn(oldGame: Game) {
     return oldGame.stack.length === this.game.stack.length - 1;
+  }
+
+
+  getPlayers() {
+    const players = [];
+    for (let index = 0; index < 4; index++) {
+      const playerIndex = (this.game.currentPlayer + index) % this.game.players.length;
+      console.log(playerIndex);
+      players.push(this.game.players[playerIndex]);
+    }
+    this.players = players;
+
+    console.log(this.players, this.game.currentPlayer);
+
   }
 }
