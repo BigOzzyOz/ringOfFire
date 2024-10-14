@@ -13,10 +13,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CardComponent } from './card/card.component';
 import { GameService } from '../firebase-service/game.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EditPlayerComponent } from '../editPlayer/editPlayer.component';
 
 
 export interface DialogData {
   name: string;
+  image: string;
 }
 
 
@@ -36,7 +38,7 @@ export class GameComponent {
   game: Game;
   imageSrc: string | undefined = 'assets/img/cards/purple_back.png';
   currentCard: { name: string; src: string; } | undefined = { name: '', src: '', };
-  players: string[] = [];
+  players: { name: string, image: string }[] = [];
 
 
   constructor(public dialog: MatDialog, private gameService: GameService, private route: ActivatedRoute, private router: Router) {
@@ -91,10 +93,30 @@ export class GameComponent {
     });
     dialogRef.afterClosed().subscribe(async (name: string) => {
       if (name && name.length > 0) {
-        this.game.players.push(name);
-        this.game.currentPlayer = this.game.players.indexOf(name);
+        this.game.players.push({ name: name, image: '1.webp' });
+        this.game.currentPlayer = this.game.players.length - 1;
+        this.getPlayers();
         await this.gameService.updateGame(this.gameId, this.createGame(this.game));
       };
+    });
+  }
+
+
+  editPlayer(index: number) {
+    const dialogRef = this.dialog.open(EditPlayerComponent, {
+      data: { name: this.game.players[index].name, image: this.game.players[index].image, },
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (!result) return;
+      if (result === 'DELETE') {
+        this.game.players.splice(index, 1);
+        this.changePlayer();
+      }
+      else if (result.name && result.name.length > 0) {
+        this.game.players[index].name = result.name;
+        this.game.players[index].image = result.image;
+      };
+      await this.gameService.updateGame(this.gameId, this.createGame(this.game));
     });
   }
 
@@ -143,15 +165,16 @@ export class GameComponent {
 
 
   getPlayers() {
-    const players = [];
+    const players: { name: string, image: string }[] = [];
     for (let index = 0; index < 4; index++) {
       const playerIndex = (this.game.currentPlayer + index) % this.game.players.length;
-      console.log(playerIndex);
       players.push(this.game.players[playerIndex]);
     }
     this.players = players;
+  }
 
-    console.log(this.players, this.game.currentPlayer);
 
+  findPlayerIndex(player: any) {
+    return this.game.players.findIndex(p => p.name === player.name);
   }
 }

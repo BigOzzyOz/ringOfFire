@@ -5,14 +5,15 @@
 <div class="players">
   @if (game.players.length <= 4) {
     @for (player of game.players; track $index) {
-      <app-player class="player-position" [name]="player" [playerActive]="game.currentPlayer === $index"></app-player>
+      <app-player (click)="editPlayer($index)" class="player-position" [name]="player.name" [image]="player.image"
+        [ngClass] [playerActive]="game.currentPlayer === $index"></app-player>
     }
   }
 
   @if (game.players.length > 4) {
     @for (player of players; track $index) {
-      <app-player class="player-position" [name]="player"
-        [playerActive]="player === game.players[game.currentPlayer]"></app-player>
+      <app-player (click)="editPlayer(findPlayerIndex(player))" class="player-position" [name]="player.name"
+        [image]="player.image" [playerActive]="player.name === game.players[game.currentPlayer].name"></app-player>
     }
     @if (game.players.length - 4 > 0) {
       <app-player class="player-position" [name]="'+' + (game.players.length - 4)"></app-player>

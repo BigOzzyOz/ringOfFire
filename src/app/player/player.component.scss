@@ -1,4 +1,4 @@
-.player{
+.player {
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
@@ -7,17 +7,20 @@
   background-color: rgb(110, 110, 110);
   border-radius: 0 50px 50px 0;
 
-  &.playerActive{
-    background-color: rgb(103, 58, 183) ;
+  &.playerActive {
+    background-color: rgb(103, 58, 183);
   }
 
-  span{
+  span {
     margin-left: 16px;
     font-size: 24px;
     color: white;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
-  img{
+  img {
     width: 75px;
     height: 75px;
     border-radius: 100%;
@@ -27,22 +30,22 @@
 
 
 @media screen and (max-width: 600px) {
-  .player{
+  .player {
     flex-direction: column-reverse;
     justify-content: space-between;
     align-items: center;
     width: 50px;
     background-color: rgb(110, 110, 110);
     border-radius: 0 0px 50px 50px;
-  
-      span{
+
+    span {
       margin-left: 0px;
       font-size: 12px;
       color: white;
       text-align: center;
     }
-  
-    img{
+
+    img {
       width: 24px;
       height: 24px;
       border-radius: 100%;

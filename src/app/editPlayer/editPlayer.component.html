@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Add a new player</h2>
+<mat-dialog-content>
+  <p>Please enter your name</p>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="name">
+  </mat-form-field>
+  <div>
+    <label id="image-label"></label>
+    <mat-radio-group aria-labelledby="image-label" class="example-radio-group" [(ngModel)]="image">
+      @for (img of  allProfilePictures; track $index) {
+        <mat-radio-button class="radio-button" [value]="img">
+          <img src="assets/img/profile/{{img}}" [alt]="img" width="50" height="50" (click)="selectImage(img)">
+        </mat-radio-button>
+      }
+    </mat-radio-group>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="{name: name, image: image}" cdkFocusInitial>Save</button>
+  <button mat-button color="warn" [mat-dialog-close]="'DELETE'" cdkFocusInitial>DELETE</button>
+</mat-dialog-actions>
